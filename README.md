@@ -4,6 +4,7 @@ A lightweight, privacy-friendly Google Chrome extension (Manifest V3) that autom
 
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-purple.svg)](#)
 [![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla%20ES6+-F7DF1E.svg?logo=javascript&logoColor=black)](#)
+[![Tests Passing](https://img.shields.io/badge/Tests-20%20Passing-brightgreen.svg)](#)
 [![Privacy](https://img.shields.io/badge/Privacy-100%25%20Client--Side-brightgreen.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -27,6 +28,7 @@ This extension was engineered to solve that specific problem with maximum reliab
 - **Lifetime Statistics**: Keeps a persistent counter of total bonuses claimed using `chrome.storage.local`.
 - **Localization Resilient**: Intelligently identifies claim chests across multiple languages and dynamic DOM structures.
 - **Debounced Clicks**: Prevents accidental double-clicks or spamming Twitch's API before the button unmounts.
+- **Automated Testing Suite**: 20 unit tests covering DOM edge-cases, cooldown limits, state sync, and Manifest V3 security.
 
 ---
 
@@ -45,10 +47,40 @@ Twitch_extension/
 │   ├── icon16.png         # Browser toolbar icon
 │   ├── icon48.png         # Extension management icon
 │   └── icon128.png        # Web store & detail view icon
+├── test/
+│   ├── mocks/             # In-memory chrome.storage and DOM mock implementations
+│   ├── fixtures/          # Realistic Twitch DOM fixtures (English, localized, balance)
+│   ├── manifest.test.js   # Suite 1: Manifest V3 & permission isolation tests
+│   ├── selector.test.js   # Suite 2: Element detection & false-positive guard tests
+│   ├── claim-engine.test.js # Suite 3: Cooldown, anti-spam & click execution tests
+│   └── popup.test.js      # Suite 4: Popup toggle & reactive storage sync tests
+├── .github/
+│   └── workflows/
+│       └── test.yml       # GitHub Actions CI workflow (Node 18, 20, 22)
+├── package.json           # Test runner script configuration
 ├── .gitignore             # Git ignore rules
 ├── LICENSE                # MIT License
 └── README.md              # Project documentation & installation guide
 ```
+
+---
+
+## 🧪 Automated Testing
+
+The project includes a comprehensive, zero-dependency test suite running on Node.js's native test runner (`node:test`):
+
+```bash
+npm test
+```
+
+### Test Coverage Highlights
+
+| Test Suite | Focus Area | Verification |
+| :--- | :--- | :--- |
+| **Suite 1: Manifest V3** | Security & Scoping | Validates V3 compliance, strict `twitch.tv` host scoping, and assets. |
+| **Suite 2: DOM Selectors** | Edge-Case Resilience | Verifies button detection across 4+ languages and strictly guards against clicking the channel points drawer. |
+| **Suite 3: Claim Engine** | Anti-Spam & Timing | Validates the 5000ms cooldown window, single-click tagging, and storage counter increments. |
+| **Suite 4: Popup Sync** | Reactive State | Confirms toggle switch state dispatch, counter formatting, and live updates. |
 
 ---
 

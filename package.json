@@ -1,0 +1,17 @@
+{
+  "name": "twitch-channel-points-auto-claimer",
+  "version": "1.0.0",
+  "description": "Lightweight, privacy-focused Chrome Extension that automatically claims Twitch channel bonus points.",
+  "scripts": {
+    "test": "node --test test/**/*.test.js"
+  },
+  "keywords": [
+    "twitch",
+    "chrome-extension",
+    "channel-points",
+    "auto-claim",
+    "manifest-v3"
+  ],
+  "author": "",
+  "license": "MIT"
+}
