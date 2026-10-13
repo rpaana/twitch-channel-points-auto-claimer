@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         node-version: [18.x, 20.x, 22.x]
 
@@ -25,4 +26,3 @@ jobs:
 
     - name: Run automated test suite
       run: npm test
-
