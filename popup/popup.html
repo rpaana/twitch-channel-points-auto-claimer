@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitch Auto-Claim</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-badge">
+          <svg viewBox="0 0 24 24" class="logo-icon" fill="currentColor">
+            <!-- Chest / Diamond icon -->
+            <path d="M5 4h14a2 2 0 0 1 2 2v2H3V6a2 2 0 0 1 2-2zm-2 6h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8zm8 2v2h2v-2h-2z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="title">Auto-Claimer</h1>
+          <p class="subtitle">Twitch Channel Points</p>
+        </div>
+      </div>
+      <div id="statusBadge" class="status-badge active">Active</div>
+    </header>
+
+    <!-- Toggle Card -->
+    <div class="card">
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <span class="toggle-label">Auto-Claim</span>
+          <span class="toggle-sublabel">Claim bonuses automatically</span>
+        </div>
+        <label class="switch" for="toggleEnabled">
+          <input type="checkbox" id="toggleEnabled" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Stats Card -->
+    <div class="card stats-card">
+      <div class="stats-header">
+        <span class="stats-label">Lifetime Bonuses Claimed</span>
+        <button id="resetStatsBtn" class="reset-btn" title="Reset Counter">Reset</button>
+      </div>
+      <div class="stats-value" id="claimCount">0</div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="scope-note">
+        <span class="dot"></span>
+        <span>Only runs on twitch.tv</span>
+      </div>
+      <div class="privacy-note">Zero trackers • 100% Client-side</div>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
