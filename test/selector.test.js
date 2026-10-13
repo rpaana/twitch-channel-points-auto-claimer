@@ -55,5 +55,12 @@ describe('Suite 2: DOM Selector & False-Positive Prevention', () => {
       assert.equal(result, null);
     });
   });
+
+  test('2.7 Rewards & Power-ups Guard: NEVER selects Rewards & Power-ups drawer toggle button', () => {
+    const { doc, rewardsBtn } = require('./fixtures/twitch-doms').createModernRewardsDrawerFixture();
+    const result = findBonusButton(doc);
+    assert.equal(result, null, 'Must return null when only Rewards & Power-ups button is present');
+    assert.notEqual(result, rewardsBtn, 'Must NEVER click the Rewards & Power-ups drawer toggle');
+  });
 });
 

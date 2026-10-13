@@ -99,10 +99,31 @@ function createNoBonusChatFixture() {
   return { doc, balanceBtn };
 }
 
+// 5. Modern Twitch Rewards and Power-ups button with aria-expanded="false" and SVG
+function createModernRewardsDrawerFixture() {
+  const { doc, chatRoom } = createTwitchBaseDoc();
+
+  const pointsContainer = new MockElement('div', {
+    class: 'community-points-summary',
+    'data-test-selector': 'community-points-summary',
+  });
+
+  const rewardsBtn = new MockElement('button', {
+    'aria-label': 'Rewards and Power-ups',
+    'aria-expanded': 'false',
+  });
+  rewardsBtn.appendChild(new MockElement('svg'));
+  pointsContainer.appendChild(rewardsBtn);
+
+  chatRoom.appendChild(pointsContainer);
+  return { doc, rewardsBtn };
+}
+
 module.exports = {
   createEnglishClaimFixture,
   createSvgIconOnlyFixture,
   createLocalizedClaimFixture,
   createNoBonusChatFixture,
+  createModernRewardsDrawerFixture,
 };
 

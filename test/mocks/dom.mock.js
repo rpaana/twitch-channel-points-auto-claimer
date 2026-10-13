@@ -20,6 +20,10 @@ class MockElement {
     return this.attributes[name] !== undefined ? this.attributes[name] : null;
   }
 
+  hasAttribute(name) {
+    return this.attributes[name] !== undefined;
+  }
+
   setAttribute(name, value) {
     this.attributes[name] = String(value);
   }

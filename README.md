@@ -4,7 +4,7 @@ A lightweight, privacy-friendly Google Chrome extension (Manifest V3) that autom
 
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-purple.svg)](#)
 [![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla%20ES6+-F7DF1E.svg?logo=javascript&logoColor=black)](#)
-[![Tests Passing](https://img.shields.io/badge/Tests-20%20Passing-brightgreen.svg)](#)
+[![Tests Passing](https://img.shields.io/badge/Tests-21%20Passing-brightgreen.svg)](#)
 [![Privacy](https://img.shields.io/badge/Privacy-100%25%20Client--Side-brightgreen.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -30,7 +30,7 @@ This extension was engineered to solve that specific problem with maximum reliab
 - **Lifetime Statistics**: Keeps a persistent counter of total bonuses claimed using `chrome.storage.local`.
 - **Localization Resilient**: Intelligently identifies claim chests across multiple languages and dynamic DOM structures.
 - **Debounced Clicks**: Prevents accidental double-clicks or spamming Twitch's API before the button unmounts.
-- **Automated Testing Suite**: 20 unit tests covering DOM edge-cases, cooldown limits, state sync, and Manifest V3 security.
+- **Automated Testing Suite**: 21 unit tests covering DOM edge-cases, cooldown limits, state sync, and Manifest V3 security.
 
 ---
 

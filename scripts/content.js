@@ -19,18 +19,62 @@
    * @param {Document|Object} doc Document or root node to query
    * @returns {Element|null} Found button or null
    */
+  /**
+   * Checks whether a button is the channel points rewards drawer toggle (which must never be clicked).
+   * @param {Element} btn
+   * @returns {boolean}
+   */
+  function isRewardsDrawerButton(btn) {
+    if (!btn || !btn.getAttribute) return true;
+
+    // 1. Drawer toggles on Twitch have aria-expanded (e.g. aria-expanded="false")
+    if (btn.getAttribute('aria-expanded') !== null) {
+      return true;
+    }
+
+    // 2. Buttons with rewards/power-ups/balance in their aria-label (and not "claim")
+    const label = (btn.getAttribute('aria-label') || '').toLowerCase();
+    if (
+      label.includes('reward') ||
+      label.includes('power-up') ||
+      label.includes('power up') ||
+      label.includes('balance') ||
+      label.includes('channel points')
+    ) {
+      if (!label.includes('claim') && !label.includes('bonus') && !label.includes('lunasta')) {
+        return true;
+      }
+    }
+
+    // 3. Child balance indicator
+    if (btn.querySelector && btn.querySelector('[data-test-selector="community-points-balance"]')) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Resiliently locate the bonus claim button across different Twitch DOM versions & languages.
+   * @param {Document|Object} doc Document or root node to query
+   * @returns {Element|null} Found button or null
+   */
   function findBonusButton(doc = document) {
     if (!doc || !doc.querySelector) return null;
 
     // 1. Direct aria-label matching (English)
     const directAria = doc.querySelector('button[aria-label="Claim Bonus"], [aria-label="Claim Bonus"]');
-    if (directAria) return directAria;
+    if (directAria && !isRewardsDrawerButton(directAria)) {
+      return directAria;
+    }
 
     // 2. Dedicated Twitch bonus icon class
     const bonusIcon = doc.querySelector('.claimable-bonus__icon');
     if (bonusIcon) {
       const parentBtn = bonusIcon.closest('button');
-      if (parentBtn) return parentBtn;
+      if (parentBtn && !isRewardsDrawerButton(parentBtn)) {
+        return parentBtn;
+      }
     }
 
     // 3. Inspect community points container (handles localized interfaces)
@@ -40,8 +84,8 @@
     if (summaryContainer) {
       const buttons = summaryContainer.querySelectorAll('button');
       for (const btn of buttons) {
-        // Skip the main balance button
-        if (btn.querySelector('[data-test-selector="community-points-balance"]')) {
+        // Skip the main rewards/power-ups/balance drawer button
+        if (isRewardsDrawerButton(btn)) {
           continue;
         }
 
@@ -58,8 +102,8 @@
           return btn;
         }
 
-        // If the button has an SVG icon inside and isn't the balance viewer, it's the chest
-        if (btn.querySelector('svg')) {
+        // If the button wraps a claimable bonus icon
+        if (btn.querySelector('.claimable-bonus__icon')) {
           return btn;
         }
       }
