@@ -1,10 +1,12 @@
 /**
- * Mock implementation of Chrome Extension Storage API (chrome.storage.local)
+ * Mock implementation of Chrome Extension Storage and Action API
  */
 class ChromeStorageMock {
   constructor() {
     this.storage = {};
     this.listeners = [];
+    this.badgeText = '';
+    this.badgeColor = '';
   }
 
   get(defaults, callback) {
@@ -67,14 +69,23 @@ class ChromeStorageMock {
           },
         },
       },
+      action: {
+        setBadgeText: (details) => {
+          self.badgeText = details.text;
+        },
+        setBadgeBackgroundColor: (details) => {
+          self.badgeColor = details.color;
+        },
+      },
     };
   }
 
   reset() {
     this.storage = {};
     this.listeners = [];
+    this.badgeText = '';
+    this.badgeColor = '';
   }
 }
 
 module.exports = { ChromeStorageMock };
-

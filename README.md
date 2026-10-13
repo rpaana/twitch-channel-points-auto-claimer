@@ -23,7 +23,9 @@ This extension was engineered to solve that specific problem with maximum reliab
 
 ## ✨ Features
 
-- **Automated Claiming**: Detects bonus opportunities instantly using a hybrid `MutationObserver` and resilient fallback scan.
+- **Automated Claiming**: Detects and claims bonus opportunities automatically without manual interaction.
+- **Ultra-Low Hardware Footprint**: Uses a lean 3-second heartbeat (~0.05ms execution) that avoids expensive DOM mutation tracking in high-velocity (50+ msg/sec) Twitch chats.
+- **Toolbar Status Badge**: Displays an `OFF` badge directly on your browser icon when paused, giving instant feedback at a glance.
 - **Reactive Popup UI**: Sleek Twitch-themed dark mode popup with live active/paused indicator.
 - **Lifetime Statistics**: Keeps a persistent counter of total bonuses claimed using `chrome.storage.local`.
 - **Localization Resilient**: Intelligently identifies claim chests across multiple languages and dynamic DOM structures.

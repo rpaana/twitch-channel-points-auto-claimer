@@ -1,6 +1,6 @@
 /**
  * Popup Controller for Twitch Auto-Claimer
- * Manages user toggling, claim statistics display, and reactive chrome.storage sync.
+ * Manages user toggling, claim statistics display, toolbar icon badges, and reactive chrome.storage sync.
  */
 
 function initPopup(doc = document, chromeApi = chrome, confirmFn = (typeof window !== 'undefined' ? window.confirm : () => true)) {
@@ -20,6 +20,14 @@ function initPopup(doc = document, chromeApi = chrome, confirmFn = (typeof windo
     } else {
       statusBadge.textContent = 'Paused';
       statusBadge.className = 'status-badge paused';
+    }
+
+    // Update Chrome toolbar action badge
+    if (chromeApi && chromeApi.action && chromeApi.action.setBadgeText) {
+      chromeApi.action.setBadgeText({ text: isEnabled ? '' : 'OFF' });
+      if (!isEnabled && chromeApi.action.setBadgeBackgroundColor) {
+        chromeApi.action.setBadgeBackgroundColor({ color: '#777777' });
+      }
     }
   }
 

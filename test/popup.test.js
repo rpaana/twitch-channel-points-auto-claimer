@@ -29,7 +29,7 @@ describe('Suite 4: Popup Controller & UI State Synchronization', () => {
     chromeMock = storageMock.createChromeGlobal();
   });
 
-  test('4.1 Initial UI Render: Renders active state and formatted count from storage', async () => {
+  test('4.1 Initial UI Render: Renders active state, formatted count, and clears badge', async () => {
     await storageMock.set({ enabled: true, claimCount: 1500 });
 
     initPopup(doc, chromeMock);
@@ -38,9 +38,10 @@ describe('Suite 4: Popup Controller & UI State Synchronization', () => {
     assert.equal(countEl.textContent, (1500).toLocaleString(), 'Counter must format number');
     assert.equal(badgeEl.textContent, 'Active');
     assert.equal(badgeEl.className, 'status-badge active');
+    assert.equal(storageMock.badgeText, '', 'Toolbar icon badge should be empty when active');
   });
 
-  test('4.2 User Toggle: Flipping switch updates storage and badge to Paused', async () => {
+  test('4.2 User Toggle: Flipping switch updates storage, sets badge to OFF, and changes UI', async () => {
     await storageMock.set({ enabled: true, claimCount: 10 });
     initPopup(doc, chromeMock);
 
@@ -52,11 +53,12 @@ describe('Suite 4: Popup Controller & UI State Synchronization', () => {
     assert.equal(stored.enabled, false, 'Storage must record enabled: false');
     assert.equal(badgeEl.textContent, 'Paused');
     assert.equal(badgeEl.className, 'status-badge paused');
+    assert.equal(storageMock.badgeText, 'OFF', 'Toolbar icon badge should display OFF');
+    assert.equal(storageMock.badgeColor, '#777777', 'Toolbar icon badge color should be gray');
   });
 
   test('4.3 Stats Reset: Reset button resets counter to 0 upon confirmation', async () => {
     await storageMock.set({ enabled: true, claimCount: 50 });
-    // Mock confirmation returning true
     const confirmAlwaysYes = () => true;
 
     initPopup(doc, chromeMock, confirmAlwaysYes);
@@ -79,4 +81,3 @@ describe('Suite 4: Popup Controller & UI State Synchronization', () => {
     assert.equal(countEl.textContent, '6', 'Popup count should update in real-time');
   });
 });
-
